@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Mum! ❤️</title>
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+      <div class="heart-pulse">❤️</div>
+      <h1 class="splash-title">Happy Birthday, Mum!</h1>
+      <p class="splash-subtitle">With all our love, from your children</p>
+    </div>
+
+    <!-- Floating Hearts -->
+    <div id="floating-hearts"></div>
+
+    <!-- Main App Container -->
+    <div id="app-container">
+      <!-- App Header -->
+      <header class="app-header">
+        <h1 class="app-title">Happy Birthday, Mum!🎂</h1>
+        <p class="app-subtitle">A special digital gift made with love</p>
+      </header>
+
+      <!-- Main Menu -->
+      <div class="menu-grid" id="main-menu">
+        <div class="menu-item" data-section="surprise">
+          <div class="menu-icon">🎁</div>
+          <div class="menu-text">View Your Surprise</div>
+        </div>
+        <div class="menu-item" data-section="photos">
+          <div class="menu-icon">📸</div>
+          <div class="menu-text">Photo Memories</div>
+        </div>
+        <div class="menu-item" data-section="messages">
+          <div class="menu-icon">💌</div>
+          <div class="menu-text">Sweet Messages</div>
+        </div>
+        <div class="menu-item" data-section="card">
+          <div class="menu-icon">💝</div>
+          <div class="menu-text">Birthday Card</div>
+        </div>
+        <div class="menu-item" data-section="reasons">
+          <div class="menu-icon">🌟</div>
+          <div class="menu-text">Why We Love You</div>
+        </div>
+        <div class="menu-item" id="confetti-btn">
+          <div class="menu-icon">🎉</div>
+          <div class="menu-text">Celebrate!</div>
+        </div>
+      </div>
+
+      <!-- Surprise Section -->
+      <div class="section" id="surprise-section">
+        <div class="section-header">
+          <h2 class="section-title">Your Surprise 🎁</h2>
+          <button class="back-btn">←</button>
+        </div>
+        <div class="message-container">
+          <p class="message-text" id="surprise-text">
+            You're the most amazing mum in the world! Today is all about
+            celebrating you and everything you mean to us. We love you more than
+            words can express!
+          </p>
+        </div>
+        <button class="generate-btn" id="surprise-generator">
+          Generate New Surprise
+        </button>
+      </div>
+
+      <!-- Photos Section -->
+      <div class="section" id="photos-section">
+        <div class="section-header">
+          <h2 class="section-title">Photo Memories 📸</h2>
+          <button class="back-btn">←</button>
+        </div>
+        <div class="carousel-container">
+          <!-- Photos will be added via JavaScript -->
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="prev-btn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-btn" id="next-btn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <p style="text-align: center; margin-top: 15px; color: #666">
+          These memories mean the world to us. Thank you for every moment.
+        </p>
+      </div>
+
+      <!-- Messages Section -->
+      <div class="section" id="messages-section">
+        <div class="section-header">
+          <h2 class="section-title">Sweet Messages 💌</h2>
+          <button class="back-btn">←</button>
+        </div>
+        <div class="message-container">
+          <p class="message-text" id="random-message">
+            Tap the button below to receive a special message!
+          </p>
+        </div>
+        <button class="generate-btn" id="message-generator">
+          💗 Tap for a Sweet Message
+        </button>
+      </div>
+
+      <!-- Card Section -->
+      <div class="section" id="card-section">
+        <div class="section-header">
+          <h2 class="section-title">Birthday Card 💝</h2>
+          <button class="back-btn">←</button>
+        </div>
+        <div class="card-content">
+          <p>Dearest Mum,</p>
+          <br />
+          <p>
+            On this special day, we want to take a moment to tell you just how
+            much you mean to us. You've been our guiding light, our biggest
+            supporter, and the heart of our family.
+          </p>
+          <br />
+          <p>
+            Through all the years, you've shown us what unconditional love looks
+            like. Your strength, kindness, and endless patience have shaped us
+            into who we are today.
+          </p>
+          <br />
+          <p>
+            Today, we celebrate you, the wonderful woman who has given us so
+            much. May this birthday bring you as much joy as you've brought into
+            our lives.
+          </p>
+          <br />
+          <p>
+            We hope you feel loved, cherished, and celebrated today and always.
+          </p>
+          <div class="card-signature">
+            <p>With all our love,</p>
+            <p>Your children ❤️</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reasons Section -->
+      <div class="section" id="reasons-section">
+        <div class="section-header">
+          <h2 class="section-title">Why We Love You 🌟</h2>
+          <button class="back-btn">←</button>
+        </div>
+        <div class="message-container">
+          <p class="message-text" id="reasons-text">
+            You always put our needs before your own. You're our safe place in a
+            chaotic world.
+          </p>
+        </div>
+        <button class="generate-btn" id="reasons-generator">
+          Another Reason We Love You
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <div class="nav-item active" data-nav="home">
+        <div class="nav-icon">🏠</div>
+        <div class="nav-text">Home</div>
+      </div>
+      <div class="nav-item" data-nav="photos">
+        <div class="nav-icon">📸</div>
+        <div class="nav-text">Photos</div>
+      </div>
+      <div class="nav-item" data-nav="messages">
+        <div class="nav-icon">💌</div>
+        <div class="nav-text">Messages</div>
+      </div>
+      <div class="nav-item" data-nav="card">
+        <div class="nav-icon">💝</div>
+        <div class="nav-text">Card</div>
+      </div>
+      <div class="nav-item" id="celebrate-nav">
+        <div class="nav-icon">🎉</div>
+        <div class="nav-text">Celebrate</div>
+      </div>
+    </nav>
+
+    <!-- Installation Prompt -->
+    <div class="install-prompt" id="install-prompt">
+      <span>Install this app for the best experience</span>
+      <button class="install-btn" id="install-btn">Install</button>
+    </div>
+
+    <script>
+      // Create floating hearts
+      function createFloatingHearts() {
+        const heartsContainer = document.getElementById("floating-hearts");
+        const heartCount = 15;
+
+        for (let i = 0; i < heartCount; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("floating-heart");
+          heart.innerHTML = "❤️";
+
+          // Random position
+          heart.style.left = `${Math.random() * 100}vw`;
+
+          // Random size
+          const size = Math.random() * 20 + 15;
+          heart.style.fontSize = `${size}px`;
+
+          // Random animation delay and duration
+          heart.style.animationDelay = `${Math.random() * 5}s`;
+          heart.style.animationDuration = `${Math.random() * 10 + 10}s`;
+
+          heartsContainer.appendChild(heart);
+        }
+      }
+
+      // Photo carousel functionality
+      let currentPhotoIndex = 0;
+      const photos = [
+        "images/image-0.jpg",
+        "images/image-1.jpg",
+        "images/image-2.jpg",
+        "images/image-3.jpg",
+        "images/image-4.jpg",
+        "images/image-5.jpg",
+        "images/image-6.jpg",
+        "images/image-7.jpg",
+        "images/image-8.jpg",
+        "images/image-9.jpg",
+        "images/image-10.jpg",
+        "images/image-11.jpg",
+        "images/image-12.jpg",
+      ];
+
+      // Messages arrays
+      const surpriseMessages = [
+        "You have the most beautiful heart of anyone we know.",
+        "Your laughter is our favorite sound in the world.",
+        "You've taught us what unconditional love truly means.",
+        "You always know how to make everything better, no matter what.",
+      ];
+
+      const loveMessages = [
+        "Your strength inspires us every single day.",
+        "You're our safe place in a chaotic world.",
+        "Your kindness touches everyone who meets you.",
+        "You make our house feel like a home.",
+        "You've sacrificed so much for us, and we're forever grateful.",
+        "You're not just our mum, you're our best friend.",
+      ];
+
+      const reasonsMessages = [
+        "You always put our needs before your own.",
+        "You believe in us even when we don't believe in ourselves.",
+        "You've taught us the value of kindness and compassion.",
+        "You make the best homemade meals that fill our hearts and stomachs.",
+        "You listen without judgment and love without conditions.",
+        "You have the ability to find joy in simple moments.",
+        "You've shown us what resilience looks like in hard times.",
+        "You remember the little things that matter to each of us.",
+        "You've created a home filled with love, laughter, and warmth.",
+        "You're the glue that holds our family together.",
+      ];
+
+      // Initialize the app
+      document.addEventListener("DOMContentLoaded", function () {
+        createFloatingHearts();
+        initializeCarousel();
+        setupEventListeners();
+        showInstallPrompt();
+
+        // After splash screen fades out, show main content
+        setTimeout(() => {
+          document.getElementById("app-container").style.opacity = "1";
+        }, 3500);
+      });
+
+      // Setup photo carousel
+      function initializeCarousel() {
+        const carouselContainer = document.querySelector(".carousel-container");
+
+        photos.forEach((photo, index) => {
+          const slide = document.createElement("div");
+          slide.classList.add("carousel-slide");
+          if (index === 0) slide.classList.add("active");
+          slide.style.backgroundImage = `url(${photo})`;
+          carouselContainer.appendChild(slide);
+        });
+      }
+
+      // Change photo in carousel
+      function changePhoto(direction) {
+        const slides = document.querySelectorAll(".carousel-slide");
+        slides[currentPhotoIndex].classList.remove("active");
+
+        if (direction === "next") {
+          currentPhotoIndex = (currentPhotoIndex + 1) % slides.length;
+        } else {
+          currentPhotoIndex =
+            (currentPhotoIndex - 1 + slides.length) % slides.length;
+        }
+
+        slides[currentPhotoIndex].classList.add("active");
+      }
+
+      // Show a random message from an array
+      function showRandomMessage(array, elementId) {
+        const randomIndex = Math.floor(Math.random() * array.length);
+        const messageElement = document.getElementById(elementId);
+
+        // Fade out
+        messageElement.style.opacity = "0";
+
+        setTimeout(() => {
+          messageElement.textContent = array[randomIndex];
+          // Fade in
+          messageElement.style.opacity = "1";
+        }, 300);
+      }
+
+      // Show a specific section
+      function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll(".section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Hide main menu
+        document.getElementById("main-menu").style.display = "none";
+
+        // Show selected section
+        document.getElementById(sectionId).classList.add("active");
+
+        // Update nav
+        updateNavForSection(sectionId);
+      }
+
+      // Go back to main menu
+      function goBackToMenu() {
+        document.querySelectorAll(".section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        document.getElementById("main-menu").style.display = "grid";
+
+        // Reset nav to home
+        updateNav("home");
+      }
+
+      // Update navigation based on section
+      function updateNavForSection(sectionId) {
+        let navItem = "home";
+
+        if (sectionId === "photos-section") navItem = "photos";
+        else if (sectionId === "messages-section") navItem = "messages";
+        else if (sectionId === "card-section") navItem = "card";
+
+        updateNav(navItem);
+      }
+
+      // Update navigation active state
+      function updateNav(activeItem) {
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.classList.remove("active");
+          if (item.getAttribute("data-nav") === activeItem) {
+            item.classList.add("active");
+          }
+        });
+      }
+
+      // Create confetti effect
+      function createConfetti() {
+        const colors = ["#ffd700", "#ff69b4", "#9370db", "#ffb6c1", "#fff9c4"];
+
+        for (let i = 0; i < 150; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+
+          // Random position
+          confetti.style.left = `${Math.random() * 100}vw`;
+
+          // Random color
+          confetti.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          // Random size
+          const size = Math.random() * 10 + 5;
+          confetti.style.width = `${size}px`;
+          confetti.style.height = `${size}px`;
+
+          // Random shape
+          if (Math.random() > 0.5) {
+            confetti.style.borderRadius = "50%";
+          }
+
+          document.body.appendChild(confetti);
+
+          // Animation
+          const animation = confetti.animate(
+            [
+              { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
+              {
+                transform: `translateY(${window.innerHeight}px) rotate(${
+                  Math.random() * 360
+                }deg)`,
+                opacity: 0,
+              },
+            ],
+            {
+              duration: Math.random() * 3000 + 2000,
+              easing: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+            }
+          );
+
+          // Remove confetti after animation
+          animation.onfinish = () => confetti.remove();
+        }
+      }
+
+      // Show install prompt for PWA
+      function showInstallPrompt() {
+        // Check if the browser supports PWA installation
+        let deferredPrompt;
+
+        window.addEventListener("beforeinstallprompt", (e) => {
+          // Prevent the mini-infobar from appearing on mobile
+          e.preventDefault();
+          // Stash the event so it can be triggered later
+          deferredPrompt = e;
+
+          // Show the install prompt
+          setTimeout(() => {
+            const installPrompt = document.getElementById("install-prompt");
+            installPrompt.style.display = "flex";
+          }, 10000); // Show after 10 seconds
+        });
+
+        // Handle install button click
+        document
+          .getElementById("install-btn")
+          .addEventListener("click", async () => {
+            if (!deferredPrompt) return;
+
+            // Show the install prompt
+            deferredPrompt.prompt();
+
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === "accepted") {
+              console.log("User accepted the install prompt");
+            } else {
+              console.log("User dismissed the install prompt");
+            }
+
+            // Hide the install prompt
+            document.getElementById("install-prompt").style.display = "none";
+
+            // Clear the saved prompt since it can't be used again
+            deferredPrompt = null;
+          });
+      }
+
+      // Setup all event listeners
+      function setupEventListeners() {
+        // Menu item clicks
+        document.querySelectorAll(".menu-item").forEach((item) => {
+          item.addEventListener("click", function () {
+            const section = this.getAttribute("data-section");
+
+            if (section) {
+              showSection(`${section}-section`);
+            } else if (this.id === "confetti-btn") {
+              createConfetti();
+            }
+          });
+        });
+
+        // Back buttons
+        document.querySelectorAll(".back-btn").forEach((btn) => {
+          btn.addEventListener("click", goBackToMenu);
+        });
+
+        // Carousel controls
+        document
+          .getElementById("prev-btn")
+          .addEventListener("click", () => changePhoto("prev"));
+        document
+          .getElementById("next-btn")
+          .addEventListener("click", () => changePhoto("next"));
+
+        // Message generators
+        document
+          .getElementById("message-generator")
+          .addEventListener("click", () => {
+            showRandomMessage(loveMessages, "random-message");
+          });
+
+        document
+          .getElementById("surprise-generator")
+          .addEventListener("click", () => {
+            showRandomMessage(surpriseMessages, "surprise-text");
+          });
+
+        document
+          .getElementById("reasons-generator")
+          .addEventListener("click", () => {
+            showRandomMessage(reasonsMessages, "reasons-text");
+          });
+
+        // Navigation clicks
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.addEventListener("click", function () {
+            const nav = this.getAttribute("data-nav");
+
+            if (nav) {
+              if (nav === "home") {
+                goBackToMenu();
+              } else {
+                showSection(`${nav}-section`);
+              }
+            } else if (this.id === "celebrate-nav") {
+              createConfetti();
+            }
+          });
+        });
+
+        // Auto-advance carousel
+        setInterval(() => {
+          if (
+            document
+              .getElementById("photos-section")
+              .classList.contains("active")
+          ) {
+            changePhoto("next");
+          }
+        }, 5000);
+      }
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+      // Register service worker for PWA functionality
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("sw.js")
+            .then((registration) => {
+              console.log("Service Worker registered!");
+            })
+            .catch((err) => {
+              console.log("Service Worker registration failed: ", err);
+            });
+        });
+      }
+
+      // Show install prompt
+      let deferredPrompt;
+      window.addEventListener("beforeinstallprompt", (e) => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+
+        // Show your custom install button
+        setTimeout(() => {
+          showInstallPrompt();
+        }, 5000); // Show after 5 seconds
+      });
+
+      function showInstallPrompt() {
+        const installPrompt = document.createElement("div");
+        installPrompt.id = "install-prompt";
+        installPrompt.innerHTML = `
+    <style>
+      #install-prompt {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(to right, #ffd700, #ff69b4);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        z-index: 20;
+        animation: slideUp 0.5s ease;
+      }
+      @keyframes slideUp {
+        from { bottom: -100px; }
+        to { bottom: 80px; }
+      }
+      .install-btn {
+        background: white;
+        color: #ff69b4;
+        border: none;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    </style>
+    <span>📱 Install as App</span>
+    <button class="install-btn" id="install-btn">Install</button>
+  `;
+
+        document.body.appendChild(installPrompt);
+
+        document
+          .getElementById("install-btn")
+          .addEventListener("click", async () => {
+            if (!deferredPrompt) return;
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === "accepted") {
+              console.log("User installed the app");
+            }
+
+            installPrompt.remove();
+            deferredPrompt = null;
+          });
+      }
+    </script>
+  </body>
+</html>
