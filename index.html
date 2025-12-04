@@ -553,80 +553,75 @@
 
     <!-- PWA Service Worker Registration -->
     <script>
-// PWA Installation
+// PWA Installation Handler
 let deferredPrompt;
+const installBtn = document.getElementById('install-btn') || createInstallButton();
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('beforeinstallprompt event fired');
-  
-  // Prevent the mini-infobar from appearing
-  e.preventDefault();
-  
-  // Stash the event so it can be triggered later
-  deferredPrompt = e;
-  
-  // Show your install button
-  showInstallButton();
-});
-
-function showInstallButton() {
-  // Create or show your install button
-  const installBtn = document.createElement('button');
-  installBtn.id = 'pwa-install-btn';
-  installBtn.innerHTML = '📱 Install App';
-  installBtn.style.cssText = `
+function createInstallButton() {
+  const btn = document.createElement('button');
+  btn.id = 'install-btn';
+  btn.innerHTML = '📱 Install App';
+  btn.style.cssText = `
     position: fixed;
     bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(to right, #ffd700, #ff69b4);
+    right: 20px;
+    background: linear-gradient(45deg, #ffd700, #ff69b4);
     color: white;
     border: none;
-    padding: 15px 25px;
-    border-radius: 50px;
-    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 14px;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
     cursor: pointer;
   `;
   
-  installBtn.onclick = async () => {
-    if (!deferredPrompt) {
-      alert('Installation not available. Try opening in Chrome browser.');
-      return;
-    }
-    
-    // Show the install prompt
-    deferredPrompt.prompt();
-    
-    // Wait for the user to respond
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    console.log(`User response: ${outcome}`);
-    
-    // Hide the button
-    installBtn.style.display = 'none';
-    
-    // Clear the saved prompt
-    deferredPrompt = null;
-  };
-  
-  document.body.appendChild(installBtn);
+  btn.addEventListener('click', installPWA);
+  document.body.appendChild(btn);
+  return btn;
 }
+
+function installPWA() {
+  if (!deferredPrompt) {
+    alert('Please use Chrome browser and wait a moment, then try again.');
+    return;
+  }
+  
+  deferredPrompt.prompt();
+  
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted install');
+      installBtn.style.display = 'none';
+    }
+    deferredPrompt = null;
+  });
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('PWA install prompt available');
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Show install button after 3 seconds
+  setTimeout(() => {
+    installBtn.style.display = 'block';
+  }, 3000);
+});
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(registration => {
-        console.log('SW registered: ', registration);
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(reg => {
+        console.log('Service Worker registered:', reg);
       })
-      .catch(error => {
-        console.log('SW registration failed: ', error);
+      .catch(err => {
+        console.log('Service Worker registration failed:', err);
       });
   });
 }
-    </script>
+  </script>
   </body>
 </html>
