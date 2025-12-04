@@ -169,66 +169,459 @@
           Another Reason We Love You
         </button>
       </div>
-
-      <!-- Bottom Navigation -->
-      <nav class="bottom-nav">
-        <div class="nav-item active" data-nav="home">
-          <div class="nav-icon">🏠</div>
-          <div class="nav-text">Home</div>
-        </div>
-        <div class="nav-item" data-nav="photos">
-          <div class="nav-icon">📸</div>
-          <div class="nav-text">Photos</div>
-        </div>
-        <div class="nav-item" data-nav="messages">
-          <div class="nav-icon">💌</div>
-          <div class="nav-text">Messages</div>
-        </div>
-        <div class="nav-item" data-nav="card">
-          <div class="nav-icon">💝</div>
-          <div class="nav-text">Card</div>
-        </div>
-        <div class="nav-item" id="celebrate-nav">
-          <div class="nav-icon">🎉</div>
-          <div class="nav-text">Celebrate</div>
-        </div>
-      </nav>
-
-      <!-- Installation Prompt -->
-      <div class="install-prompt" id="install-prompt" style="display:none;">
-        <span>Install this app for the best experience</span>
-        <button class="install-btn" id="install-btn">Install</button>
-      </div>
-
-      <script>
-        // hearts, carousel, message generators etc... unchanged
-        // (omitting for brevity)
-
-        // --- PWA Install Prompt Handler --- //
-        let deferredPrompt = null;
-        window.addEventListener('beforeinstallprompt', (e) => {
-          e.preventDefault();
-          deferredPrompt = e;
-          document.getElementById('install-prompt').style.display = 'flex';
-        });
-        document.getElementById('install-btn').addEventListener('click', async () => {
-          if (!deferredPrompt) return;
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          if (outcome === 'accepted') {
-            document.getElementById('install-prompt').style.display = 'none';
-          }
-          deferredPrompt = null;
-        });
-
-        // --- Service Worker Registration --- //
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js', { scope: '/' });
-          });
-        }
-      </script>
-
     </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <div class="nav-item active" data-nav="home">
+        <div class="nav-icon">🏠</div>
+        <div class="nav-text">Home</div>
+      </div>
+      <div class="nav-item" data-nav="photos">
+        <div class="nav-icon">📸</div>
+        <div class="nav-text">Photos</div>
+      </div>
+      <div class="nav-item" data-nav="messages">
+        <div class="nav-icon">💌</div>
+        <div class="nav-text">Messages</div>
+      </div>
+      <div class="nav-item" data-nav="card">
+        <div class="nav-icon">💝</div>
+        <div class="nav-text">Card</div>
+      </div>
+      <div class="nav-item" id="celebrate-nav">
+        <div class="nav-icon">🎉</div>
+        <div class="nav-text">Celebrate</div>
+      </div>
+    </nav>
+
+    <!-- Installation Prompt -->
+    <div class="install-prompt" id="install-prompt">
+      <span>Install this app for the best experience</span>
+      <button class="install-btn" id="install-btn">Install</button>
+    </div>
+
+    <script>
+      // Create floating hearts
+      function createFloatingHearts() {
+        const heartsContainer = document.getElementById("floating-hearts");
+        const heartCount = 15;
+
+        for (let i = 0; i < heartCount; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("floating-heart");
+          heart.innerHTML = "❤️";
+
+          // Random position
+          heart.style.left = `${Math.random() * 100}vw`;
+
+          // Random size
+          const size = Math.random() * 20 + 15;
+          heart.style.fontSize = `${size}px`;
+
+          // Random animation delay and duration
+          heart.style.animationDelay = `${Math.random() * 5}s`;
+          heart.style.animationDuration = `${Math.random() * 10 + 10}s`;
+
+          heartsContainer.appendChild(heart);
+        }
+      }
+
+      // Photo carousel functionality
+      let currentPhotoIndex = 0;
+      const photos = [
+        "images/image-0.jpg",
+        "images/image-1.jpg",
+        "images/image-2.jpg",
+        "images/image-3.jpg",
+        "images/image-4.jpg",
+        "images/image-5.jpg",
+        "images/image-6.jpg",
+        "images/image-7.jpg",
+        "images/image-8.jpg",
+        "images/image-9.jpg",
+        "images/image-10.jpg",
+        "images/image-11.jpg",
+        "images/image-12.jpg",
+      ];
+
+      // Messages arrays
+      const surpriseMessages = [
+        "You have the most beautiful heart of anyone we know.",
+        "Your laughter is our favorite sound in the world.",
+        "You've taught us what unconditional love truly means.",
+        "You always know how to make everything better, no matter what.",
+      ];
+
+      const loveMessages = [
+        "Your strength inspires us every single day.",
+        "You're our safe place in a chaotic world.",
+        "Your kindness touches everyone who meets you.",
+        "You make our house feel like a home.",
+        "You've sacrificed so much for us, and we're forever grateful.",
+        "You're not just our mum, you're our best friend.",
+      ];
+
+      const reasonsMessages = [
+        "You always put our needs before your own.",
+        "You believe in us even when we don't believe in ourselves.",
+        "You've taught us the value of kindness and compassion.",
+        "You make the best homemade meals that fill our hearts and stomachs.",
+        "You listen without judgment and love without conditions.",
+        "You have the ability to find joy in simple moments.",
+        "You've shown us what resilience looks like in hard times.",
+        "You remember the little things that matter to each of us.",
+        "You've created a home filled with love, laughter, and warmth.",
+        "You're the glue that holds our family together.",
+      ];
+
+      // Initialize the app
+      document.addEventListener("DOMContentLoaded", function () {
+        createFloatingHearts();
+        initializeCarousel();
+        setupEventListeners();
+        showInstallPrompt();
+
+        // After splash screen fades out, show main content
+        setTimeout(() => {
+          document.getElementById("app-container").style.opacity = "1";
+        }, 3500);
+      });
+
+      // Setup photo carousel
+      function initializeCarousel() {
+        const carouselContainer = document.querySelector(".carousel-container");
+
+        photos.forEach((photo, index) => {
+          const slide = document.createElement("div");
+          slide.classList.add("carousel-slide");
+          if (index === 0) slide.classList.add("active");
+          slide.style.backgroundImage = `url(${photo})`;
+          carouselContainer.appendChild(slide);
+        });
+      }
+
+      // Change photo in carousel
+      function changePhoto(direction) {
+        const slides = document.querySelectorAll(".carousel-slide");
+        slides[currentPhotoIndex].classList.remove("active");
+
+        if (direction === "next") {
+          currentPhotoIndex = (currentPhotoIndex + 1) % slides.length;
+        } else {
+          currentPhotoIndex =
+            (currentPhotoIndex - 1 + slides.length) % slides.length;
+        }
+
+        slides[currentPhotoIndex].classList.add("active");
+      }
+
+      // Show a random message from an array
+      function showRandomMessage(array, elementId) {
+        const randomIndex = Math.floor(Math.random() * array.length);
+        const messageElement = document.getElementById(elementId);
+
+        // Fade out
+        messageElement.style.opacity = "0";
+
+        setTimeout(() => {
+          messageElement.textContent = array[randomIndex];
+          // Fade in
+          messageElement.style.opacity = "1";
+        }, 300);
+      }
+
+      // Show a specific section
+      function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll(".section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Hide main menu
+        document.getElementById("main-menu").style.display = "none";
+
+        // Show selected section
+        document.getElementById(sectionId).classList.add("active");
+
+        // Update nav
+        updateNavForSection(sectionId);
+      }
+
+      // Go back to main menu
+      function goBackToMenu() {
+        document.querySelectorAll(".section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        document.getElementById("main-menu").style.display = "grid";
+
+        // Reset nav to home
+        updateNav("home");
+      }
+
+      // Update navigation based on section
+      function updateNavForSection(sectionId) {
+        let navItem = "home";
+
+        if (sectionId === "photos-section") navItem = "photos";
+        else if (sectionId === "messages-section") navItem = "messages";
+        else if (sectionId === "card-section") navItem = "card";
+
+        updateNav(navItem);
+      }
+
+      // Update navigation active state
+      function updateNav(activeItem) {
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.classList.remove("active");
+          if (item.getAttribute("data-nav") === activeItem) {
+            item.classList.add("active");
+          }
+        });
+      }
+
+      // Create confetti effect
+      function createConfetti() {
+        const colors = ["#ffd700", "#ff69b4", "#9370db", "#ffb6c1", "#fff9c4"];
+
+        for (let i = 0; i < 150; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+
+          // Random position
+          confetti.style.left = `${Math.random() * 100}vw`;
+
+          // Random color
+          confetti.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          // Random size
+          const size = Math.random() * 10 + 5;
+          confetti.style.width = `${size}px`;
+          confetti.style.height = `${size}px`;
+
+          // Random shape
+          if (Math.random() > 0.5) {
+            confetti.style.borderRadius = "50%";
+          }
+
+          document.body.appendChild(confetti);
+
+          // Animation
+          const animation = confetti.animate(
+            [
+              { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
+              {
+                transform: `translateY(${window.innerHeight}px) rotate(${
+                  Math.random() * 360
+                }deg)`,
+                opacity: 0,
+              },
+            ],
+            {
+              duration: Math.random() * 3000 + 2000,
+              easing: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+            }
+          );
+
+          // Remove confetti after animation
+          animation.onfinish = () => confetti.remove();
+        }
+      }
+
+      // Show install prompt for PWA
+      function showInstallPrompt() {
+        // Check if the browser supports PWA installation
+        let deferredPrompt;
+
+        window.addEventListener("beforeinstallprompt", (e) => {
+          // Prevent the mini-infobar from appearing on mobile
+          e.preventDefault();
+          // Stash the event so it can be triggered later
+          deferredPrompt = e;
+
+          // Show the install prompt
+          setTimeout(() => {
+            const installPrompt = document.getElementById("install-prompt");
+            installPrompt.style.display = "flex";
+          }, 10000); // Show after 10 seconds
+        });
+
+        // Handle install button click
+        document
+          .getElementById("install-btn")
+          .addEventListener("click", async () => {
+            if (!deferredPrompt) return;
+
+            // Show the install prompt
+            deferredPrompt.prompt();
+
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === "accepted") {
+              console.log("User accepted the install prompt");
+            } else {
+              console.log("User dismissed the install prompt");
+            }
+
+            // Hide the install prompt
+            document.getElementById("install-prompt").style.display = "none";
+
+            // Clear the saved prompt since it can't be used again
+            deferredPrompt = null;
+          });
+      }
+
+      // Setup all event listeners
+      function setupEventListeners() {
+        // Menu item clicks
+        document.querySelectorAll(".menu-item").forEach((item) => {
+          item.addEventListener("click", function () {
+            const section = this.getAttribute("data-section");
+
+            if (section) {
+              showSection(`${section}-section`);
+            } else if (this.id === "confetti-btn") {
+              createConfetti();
+            }
+          });
+        });
+
+        // Back buttons
+        document.querySelectorAll(".back-btn").forEach((btn) => {
+          btn.addEventListener("click", goBackToMenu);
+        });
+
+        // Carousel controls
+        document
+          .getElementById("prev-btn")
+          .addEventListener("click", () => changePhoto("prev"));
+        document
+          .getElementById("next-btn")
+          .addEventListener("click", () => changePhoto("next"));
+
+        // Message generators
+        document
+          .getElementById("message-generator")
+          .addEventListener("click", () => {
+            showRandomMessage(loveMessages, "random-message");
+          });
+
+        document
+          .getElementById("surprise-generator")
+          .addEventListener("click", () => {
+            showRandomMessage(surpriseMessages, "surprise-text");
+          });
+
+        document
+          .getElementById("reasons-generator")
+          .addEventListener("click", () => {
+            showRandomMessage(reasonsMessages, "reasons-text");
+          });
+
+        // Navigation clicks
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.addEventListener("click", function () {
+            const nav = this.getAttribute("data-nav");
+
+            if (nav) {
+              if (nav === "home") {
+                goBackToMenu();
+              } else {
+                showSection(`${nav}-section`);
+              }
+            } else if (this.id === "celebrate-nav") {
+              createConfetti();
+            }
+          });
+        });
+
+        // Auto-advance carousel
+        setInterval(() => {
+          if (
+            document
+              .getElementById("photos-section")
+              .classList.contains("active")
+          ) {
+            changePhoto("next");
+          }
+        }, 5000);
+      }
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+// PWA Installation Handler
+let deferredPrompt;
+const installBtn = document.getElementById('install-btn') || createInstallButton();
+
+function createInstallButton() {
+  const btn = document.createElement('button');
+  btn.id = 'install-btn';
+  btn.innerHTML = '📱 Install App';
+  btn.style.cssText = `
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: linear-gradient(45deg, #ffd700, #ff69b4);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+    cursor: pointer;
+  `;
+  
+  btn.addEventListener('click', installPWA);
+  document.body.appendChild(btn);
+  return btn;
+}
+
+function installPWA() {
+  if (!deferredPrompt) {
+    alert('Please use Chrome browser and wait a moment, then try again.');
+    return;
+  }
+  
+  deferredPrompt.prompt();
+  
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted install');
+      installBtn.style.display = 'none';
+    }
+    deferredPrompt = null;
+  });
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('PWA install prompt available');
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Show install button after 3 seconds
+  setTimeout(() => {
+    installBtn.style.display = 'block';
+  }, 3000);
+});
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(reg => {
+        console.log('Service Worker registered:', reg);
+      })
+      .catch(err => {
+        console.log('Service Worker registration failed:', err);
+      });
+  });
+}
+  </script>
   </body>
-</html>
+  </html>
