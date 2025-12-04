@@ -1,28 +1,21 @@
-// sw.js - Simple Service Worker
-const CACHE_NAME = 'birthday-app-v1.0';
+// sw.js - MUST be in root folder
+const CACHE_NAME = 'mum-birthday-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/manifest.json'
+];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll([
-          './',
-          './index.html',
-          './manifest.json',
-          './sw.js'
-        ]);
-      })
+      .then(cache => cache.addAll(urlsToCache))
   );
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
-      .then((response) => {
-        return response || fetch(event.request);
-      })
-  );
-});      );
-    })
+      .then(response => response || fetch(event.request))
   );
 });
